@@ -59,20 +59,28 @@
 			const thisProduct = this;
 			thisProduct.id = id;
 			thisProduct.data = data;
-      thisProduct.renderInManu();
+			thisProduct.renderInManu();
 			console.log("new Product:", thisProduct);
 		}
 
-    renderInManu(){
-      const thisProduct = this;
-      /* generate HTML based on tamplate */
-      const generatedHTML = templates.menuProduct(thisProduct.data)
-      // console.log(generatedHTML)
-      
-      /* create element using utils.createElementFromHRML */
-      /* find meno container */
-      /* add element to menu */
-    }
+		renderInManu() {
+			const thisProduct = this;
+			/* generate HTML based on tamplate */
+			const generatedHTML = templates.menuProduct(thisProduct.data);
+			// console.log(generatedHTML)
+
+			/* create element using utils.createElementFromHRML */
+			thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+			console.log(thisProduct.element);
+
+			/* find menu container */
+			const menuContainer = document.querySelector(select.containerOf.menu);
+			console.log("manuContainer", menuContainer);
+
+			/* add element to menu */
+      menuContainer.appendChild(thisProduct.element)
+
+		}
 	}
 
 	const app = {
