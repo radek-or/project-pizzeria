@@ -55,16 +55,39 @@
 	};
 
 	class Product {
-		constructor() {
+		constructor(id, data) {
 			const thisProduct = this;
+			thisProduct.id = id;
+			thisProduct.data = data;
+      thisProduct.renderInManu();
 			console.log("new Product:", thisProduct);
 		}
+
+    renderInManu(){
+      const thisProduct = this;
+      /* generate HTML based on tamplate */
+      const generatedHTML = templates.menuProduct(thisProduct.data)
+      // console.log(generatedHTML)
+      
+      /* create element using utils.createElementFromHRML */
+      /* find meno container */
+      /* add element to menu */
+    }
 	}
 
 	const app = {
 		initMenu: function () {
-			const testProduct = new Product();
-			console.log("testProduct", testProduct);
+			const thisApp = this;
+			console.log("thisApp.data", thisApp.data);
+			for (let productData in thisApp.data.products) {
+				new Product(productData, thisApp.data.products[productData]);
+			}
+		},
+
+		initData: function () {
+			const thisApp = this;
+
+			thisApp.data = dataSource;
 		},
 
 		init: function () {
@@ -75,6 +98,7 @@
 			console.log("settings:", settings);
 			console.log("templates:", templates);
 
+			thisApp.initData();
 			thisApp.initMenu();
 		},
 	};
