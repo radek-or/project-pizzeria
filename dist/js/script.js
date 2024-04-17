@@ -41,7 +41,7 @@ const classNames = {
 
 const settings = {
 	amountWidget: {
-		defaultValue: 1,
+		defaultValue: 7,
 		defaultMin: 0,
 		defaultMax: 10,
 	},
@@ -210,7 +210,16 @@ class AmountWidget {
 	constructor(element) {
 		const thisWidget = this;
 		thisWidget.getElements(element);
-		thisWidget.setValue(thisWidget.input.value);
+		thisWidget.setValue(
+			thisWidget.input.value == undefined
+				? settings.amountWidget.defaultValue
+				: thisWidget.input.value
+		);
+
+		if (!thisWidget.input.hasAttribute('value')) {
+			// Jeśli atrybut value nie istnieje, ustawiamy wartość domyślną zdefiniowaną w settings
+			thisWidget.setValue(settings.amountWidget.defaultValue);
+		}
 		thisWidget.initActions();
 
 		console.log("AmountWidget:", thisWidget);
@@ -238,7 +247,7 @@ class AmountWidget {
 		if (
 			thisWidget.value !== newValue &&
 			!isNaN(newValue) &&
-			newValue > settings.amountWidget.defaultMin &&
+			newValue >= settings.amountWidget.defaultMin &&
 			newValue <= settings.amountWidget.defaultMax
 		) {
 			thisWidget.value = newValue;
