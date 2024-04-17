@@ -208,7 +208,7 @@ class AmountWidget {
 		const thisWidget = this;
 		thisWidget.getElements(element);
 		thisWidget.setValue(thisWidget.input.value);
-		thisWidget.initActions()
+		thisWidget.initActions();
 
 		console.log("AmountWidget:", thisWidget);
 		console.log("constructor arguments:", element);
@@ -231,14 +231,16 @@ class AmountWidget {
 	setValue(value) {
 		const thisWidget = this;
 		const newValue = parseInt(value);
-
-		thisWidget.value = newValue;
-		thisWidget.input.value = thisWidget.value;
-
+	
 		if (thisWidget.value !== newValue && !isNaN(newValue)) {
 			thisWidget.value = newValue;
+		} else {
+			thisWidget.input.value = thisWidget.value;
 		}
+	
+		thisWidget.input.value = thisWidget.value;
 	}
+	
 
 	initActions() {
 		const thisWidget = this;
@@ -252,7 +254,9 @@ class AmountWidget {
 		thisWidget.linkIncrease.addEventListener("click", function () {
 			thisWidget.setValue(thisWidget.value + 1);
 		});
-		thisWidget.linkIncrease.addEventListener("click", function() {console.log('dupa')});
+		thisWidget.linkIncrease.addEventListener("click", function () {
+			console.log("dupa");
+		});
 	}
 }
 
