@@ -5,6 +5,7 @@
 const select = {
 	templateOf: {
 		menuProduct: "#template-menu-product",
+		cartProduct: "#template-cart-product",
 	},
 	containerOf: {
 		menu: "#product-list",
@@ -25,10 +26,29 @@ const select = {
 	},
 	widgets: {
 		amount: {
-			input: 'input[name="amount"]',
+			input: "input.amount",
 			linkDecrease: 'a[href="#less"]',
 			linkIncrease: 'a[href="#more"]',
 		},
+	},
+	cart: {
+		productList: ".cart__order-summary",
+		toggleTrigger: ".cart__summary",
+		totalNumber: `.cart__total-number`,
+		totalPrice:
+			".cart__total-price strong, .cart__order-total .cart__order-price-sum strong",
+		subtotalPrice: ".cart__order-subtotal .cart__order-price-sum strong",
+		deliveryFee: ".cart__order-delivery .cart__order-price-sum strong",
+		form: ".cart__order",
+		formSubmit: '.cart__order [type="submit"]',
+		phone: '[name="phone"]',
+		address: '[name="address"]',
+	},
+	cartProduct: {
+		amountWidget: ".widget-amount",
+		price: ".cart__product-price",
+		edit: '[href="#edit"]',
+		remove: '[href="#remove"]',
 	},
 };
 
@@ -37,13 +57,19 @@ const classNames = {
 		wrapperActive: "active",
 		imageVisible: "active",
 	},
+	cart: {
+		wrapperActive: "active",
+	},
 };
 
 const settings = {
 	amountWidget: {
-		defaultValue: 7,
-		defaultMin: 0,
-		defaultMax: 10,
+		defaultValue: 1,
+		defaultMin: 1,
+		defaultMax: 9,
+	},
+	cart: {
+		defaultDeliveryFee: 20,
 	},
 };
 
@@ -51,6 +77,11 @@ const templates = {
 	menuProduct: Handlebars.compile(
 		document.querySelector(select.templateOf.menuProduct).innerHTML
 	),
+	// CODE ADDED START
+	cartProduct: Handlebars.compile(
+		document.querySelector(select.templateOf.cartProduct).innerHTML
+	),
+	// CODE ADDED END
 };
 
 class Product {
@@ -216,7 +247,7 @@ class AmountWidget {
 				: thisWidget.input.value
 		);
 
-		if (!thisWidget.input.hasAttribute('value')) {
+		if (!thisWidget.input.hasAttribute("value")) {
 			// Jeśli atrybut value nie istnieje, ustawiamy wartość domyślną zdefiniowaną w settings
 			thisWidget.setValue(settings.amountWidget.defaultValue);
 		}
