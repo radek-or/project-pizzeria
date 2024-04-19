@@ -347,4 +347,12 @@ const app = {
   },
 };
 
+class cart{
+  constructor(element){
+    const thisCart = this;
+		thisCart.products = [];
+
+	}
+}
+
 app.init();
