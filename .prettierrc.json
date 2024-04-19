@@ -2,6 +2,6 @@
   "tabWidth": 2,
   "useTabs": false,
   "singleQuote": true,
-  "htmlVoidTags": "as-needed",
+  "htmlVoidTags": "never",
   "trailingComma": "none"
 }
