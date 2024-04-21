@@ -387,14 +387,28 @@ const app = {
     const thisApp = this;
     // console.log("thisApp.data", thisApp.data);
     for (let productData in thisApp.data.products) {
-      new Product(productData, thisApp.data.products[productData]);
+      new Product(
+        thisApp.data.products[productData].id,
+        thisApp.data.products[productData]
+      );
     }
   },
 
   initData: function () {
     const thisApp = this;
-
+    const url = settings.db.url + '/' + settings.db.products;
     thisApp.data = {};
+
+    fetch(url)
+      .then(function (rawResponse) {
+        return rawResponse.json();
+      })
+      .then(function (parsedResponse) {
+        console.log('parsedResponse', parsedResponse);
+        thisApp.data.products = parsedResponse; // Zapisanie parsedResponse jako thisApp.data.products
+        thisApp.initMenu(); // Wywołanie metody initMenu
+      });
+    console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   initCart: function () {
@@ -412,7 +426,6 @@ const app = {
     // console.log("templates:", templates);
 
     thisApp.initData();
-    thisApp.initMenu();
     thisApp.initCart();
   }
 };
