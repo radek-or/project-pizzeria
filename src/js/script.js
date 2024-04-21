@@ -88,8 +88,11 @@ class Product {
   constructor(id, data) {
     const thisProduct = this;
     thisProduct.id = id;
+    thisProduct.name = data.name;
+    thisProduct.amount = data.amount;
+    thisProduct.priceSingle = data.price;
     thisProduct.data = data;
-    thisProduct.renderInManu();
+    thisProduct.renderInMenu();
     thisProduct.getElements();
     thisProduct.initAccordion();
     thisProduct.initOrderForm();
@@ -98,7 +101,7 @@ class Product {
     // console.log("new Product:", thisProduct);
   }
 
-  renderInManu() {
+  renderInMenu() {
     const thisProduct = this;
     /* generate HTML based on tamplate */
     const generatedHTML = templates.menuProduct(thisProduct.data);
@@ -181,6 +184,7 @@ class Product {
     thisProduct.cartButton.addEventListener('click', function (event) {
       event.preventDefault();
       thisProduct.processOrder();
+      thisProduct.addToCart();
     });
   }
   processOrder() {
@@ -230,6 +234,8 @@ class Product {
       }
     }
     price *= thisProduct.amountWidget.value;
+
+    thisProduct.priceSingle = parseFloat(thisProduct.priceElem.innerHTML);
     // Update calculated price in the HTML
     thisProduct.priceElem.innerHTML = price;
   }
@@ -240,6 +246,62 @@ class Product {
     thisProduct.amountWidgetElem.addEventListener('updated', function () {
       thisProduct.processOrder();
     });
+  }
+
+  addToCart() {
+    const thisProduct = this;
+    app.cart.add(thisProduct.prepareCartProduct());
+  }
+  prepareCartProduct() {
+    const thisProduct = this;
+    // Pobieramy aktualną cenę jednostkową produktu
+    const priceSingle = thisProduct.priceSingle;
+
+    // Pobieramy aktualną ilość produktów
+    const amount = thisProduct.amountWidget.value;
+
+    // Obliczamy cenę całkowitą na podstawie ceny jednostkowej i ilości
+    const price = priceSingle * amount;
+
+    const productSummary = {
+      id: thisProduct.id,
+      name: thisProduct.name,
+      amount: amount, // Przekazujemy ilość do obiektu productSummary
+      priceSingle: priceSingle,
+      price: price, // Przekazujemy cenę całkowitą do obiektu productSummary
+      params: thisProduct.prepareCartProductParams()
+    };
+    return productSummary;
+  }
+
+  prepareCartProductParams() {
+    const thisProduct = this;
+
+    const formData = utils.serializeFormToObject(thisProduct.form);
+    const params = {};
+
+    // for very category (param)
+    for (let paramId in thisProduct.data.params) {
+      const param = thisProduct.data.params[paramId];
+
+      // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
+      params[paramId] = {
+        label: param.label,
+        options: {}
+      };
+
+      // for every option in this category
+      for (let optionId in param.options) {
+        const option = param.options[optionId];
+        const optionSelected =
+          formData[paramId] && formData[paramId].includes(optionId);
+
+        if (optionSelected) {
+          params[paramId].options[optionId] = option.label;
+        }
+      }
+    }
+    return params;
   }
 }
 
@@ -361,7 +423,7 @@ class Cart {
     thisCart.getElements(element);
     thisCart.initActions();
 
-    console.log('new Cart:', thisCart);
+    // console.log('new Cart:', thisCart);
   }
 
   getElements(element) {
@@ -371,6 +433,9 @@ class Cart {
     thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(
       select.cart.toggleTrigger
     );
+    thisCart.dom.productList = thisCart.dom.wrapper.querySelector(
+      select.cart.productList
+    );
   }
 
   initActions() {
@@ -378,6 +443,18 @@ class Cart {
     thisCart.dom.toggleTrigger.addEventListener('click', function () {
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
+  }
+
+  add(menuProduct) {
+    const thisCart = this;
+    const generatedHTML = templates.cartProduct(menuProduct);
+
+    /* create element using utils.createElementFromHTML */
+    const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+    /* add element to cart */
+    thisCart.dom.productList.appendChild(generatedDOM);
+    console.log('adding product', menuProduct);
   }
 }
 
