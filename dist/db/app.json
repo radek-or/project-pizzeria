@@ -6,7 +6,9 @@
       "name": "Zio Stefano's Doughnut",
       "price": 9,
       "description": "Treat yourself with this soft, freshly baked cookie. The recipe has been handed down from generation to generation in our family and it has won us several first place prizes in local competitions.",
-      "images": ["<img class=\"active\" src=\"images/doughnut.svg\">"]
+      "images": [
+        "<img class=\"active\" src=\"images/doughnut.svg\">"
+      ]
     },
     {
       "id": "breakfast",
@@ -14,7 +16,9 @@
       "name": "Zia Giulia's Breakfast",
       "price": 9,
       "description": "There's no better way to start your day than indulging yourself with a cup of fresh Italian coffee and crispy waffels. Made just for you on the spot, this breakfast combo has been our guests' favorite for over 50 years.",
-      "images": ["<img class=\"active\" src=\"images/breakfast.svg\">"],
+      "images": [
+        "<img class=\"active\" src=\"images/breakfast.svg\">"
+      ],
       "params": {
         "coffee": {
           "label": "Coffee type",
@@ -196,6 +200,301 @@
           }
         }
       }
+    }
+  ],
+  "orders": [
+    {
+      "address": "",
+      "phone": "",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 1
+    },
+    {
+      "address": "",
+      "phone": "",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 2
+    },
+    {
+      "address": "",
+      "phone": "",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 3
+    },
+    {
+      "address": "",
+      "phone": "",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 4
+    },
+    {
+      "address": "456@ewrt.pl",
+      "phone": "456456456",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 5
+    },
+    {
+      "address": "456@ewrt.pl",
+      "phone": "456456456",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 6
+    },
+    {
+      "address": "",
+      "phone": "",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "cake",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zio Stefano's Doughnut",
+          "params": {}
+        }
+      ],
+      "id": 7
+    },
+    {
+      "address": "tete 444",
+      "phone": "456456456",
+      "totalPrice": 20,
+      "subtotalPrice": 0,
+      "totalNumber": 0,
+      "deliveryFee": 20,
+      "products": [],
+      "id": 8
+    },
+    {
+      "address": "tete 444",
+      "phone": "456456456",
+      "totalPrice": 20,
+      "subtotalPrice": 0,
+      "totalNumber": 0,
+      "deliveryFee": 20,
+      "products": [],
+      "id": 9
+    },
+    {
+      "address": "tete 444",
+      "phone": "456456456",
+      "totalPrice": 20,
+      "subtotalPrice": 0,
+      "totalNumber": 0,
+      "deliveryFee": 20,
+      "products": [],
+      "id": 10
+    },
+    {
+      "address": "tete 444",
+      "phone": "456456456",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "breakfast",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zia Giulia's Breakfast",
+          "params": {
+            "coffee": {
+              "label": "Coffee type",
+              "options": {
+                "latte": "Latte"
+              }
+            }
+          }
+        }
+      ],
+      "id": 11
+    },
+    {
+      "address": "tete 444",
+      "phone": "456456456",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "breakfast",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zia Giulia's Breakfast",
+          "params": {
+            "coffee": {
+              "label": "Coffee type",
+              "options": {
+                "latte": "Latte"
+              }
+            }
+          }
+        }
+      ],
+      "id": 12
+    },
+    {
+      "address": "456 45645 456 4",
+      "phone": "456456456",
+      "totalPrice": 60,
+      "subtotalPrice": 40,
+      "totalNumber": 2,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "pizza",
+          "amount": 2,
+          "price": 40,
+          "priceSingle": 20,
+          "name": "Nonna Alba's Pizza",
+          "params": {
+            "sauce": {
+              "label": "Sauce",
+              "options": {
+                "tomato": "Tomato"
+              }
+            },
+            "toppings": {
+              "label": "Toppings",
+              "options": {
+                "olives": "Olives",
+                "redPeppers": "Red peppers",
+                "greenPeppers": "Green peppers",
+                "mushrooms": "Mushrooms",
+                "basil": "Fresh basil"
+              }
+            },
+            "crust": {
+              "label": "pizza crust",
+              "options": {
+                "standard": "standard"
+              }
+            }
+          }
+        }
+      ],
+      "id": 13
+    },
+    {
+      "address": "456 45645 456 4",
+      "phone": "456456456",
+      "totalPrice": 29,
+      "subtotalPrice": 9,
+      "totalNumber": 1,
+      "deliveryFee": 20,
+      "products": [
+        {
+          "id": "breakfast",
+          "amount": 1,
+          "price": 9,
+          "priceSingle": 9,
+          "name": "Zia Giulia's Breakfast",
+          "params": {
+            "coffee": {
+              "label": "Coffee type",
+              "options": {
+                "latte": "Latte"
+              }
+            }
+          }
+        }
+      ],
+      "id": 14
+    },
+    {
+      "address": "tete 444",
+      "phone": "456 45645 456 4",
+      "totalPrice": 20,
+      "subtotalPrice": 0,
+      "totalNumber": 0,
+      "deliveryFee": 20,
+      "products": [],
+      "id": 15
     }
   ]
 }

@@ -463,12 +463,24 @@ class Cart {
     thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(
       select.cart.totalNumber
     );
+    thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+    thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+    thisCart.dom.address = thisCart.dom.wrapper.querySelector(
+      select.cart.address
+    );
   }
 
   initActions() {
     const thisCart = this;
     thisCart.dom.toggleTrigger.addEventListener('click', function () {
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+    });
+
+    thisCart.dom.form.addEventListener('submit', function (event) {
+      // Zablokuj domyślne zachowanie formularza (przeładowanie strony)
+      event.preventDefault();
+      // Wywołaj metodę sendOrder
+      thisCart.sendOrder();
     });
 
     // Dodajemy nasłuchiwanie na zdarzenie 'updated' na liście produktów
@@ -494,34 +506,74 @@ class Cart {
   }
   update() {
     const thisCart = this;
-    let totalNumber = 0;
-    let subtotalPrice = 0;
+    thisCart.totalNumber = 0;
+    thisCart.subtotalPrice = 0;
 
     for (const product of thisCart.products) {
-      totalNumber += product.amount;
-      subtotalPrice += product.price;
+      thisCart.totalNumber += product.amount;
+      thisCart.subtotalPrice += product.price;
     }
 
-    // Jeśli liczba produktów w koszyku jest większa niż 0, dodajemy koszt dostawy
-    if (totalNumber > 0) {
-      subtotalPrice += thisCart.deliveryFee; // Dodajemy koszt dostawy do ceny całkowitej
-    } else {
-      // Jeśli koszyk jest pusty, zerujemy koszt dostawy
-      thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
-    }
+    // Add totalNumber and subtotalPrice as properties of Cart object
+    thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
 
-    // Obliczamy całkowitą cenę (suma częściowa + dostawa)
-    thisCart.totalPrice = subtotalPrice;
-
-    // Aktualizujemy wartości na stronie
-    thisCart.dom.totalNumber.innerHTML = totalNumber;
-    thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+    thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
+    thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
     thisCart.dom.deliveryFee.textContent = thisCart.deliveryFee;
 
-    // Aktualizujemy całkowitą cenę w każdym miejscu, gdzie jest wyświetlana
     for (const totalPriceElement of thisCart.dom.totalPrice) {
       totalPriceElement.innerHTML = thisCart.totalPrice;
     }
+  }
+  sendOrder() {
+    const thisCart = this;
+    const url = settings.db.url + '/' + settings.db.orders;
+
+    // Prepare payload object
+    const payload = {
+      address: thisCart.dom.address.value,
+      phone: thisCart.dom.phone.value,
+      totalPrice: thisCart.totalPrice,
+      subtotalPrice: thisCart.subtotalPrice,
+      totalNumber: thisCart.totalNumber,
+      deliveryFee: thisCart.deliveryFee,
+      products: [] // Empty array for now
+    };
+
+    // Add products data to payload
+    for (let prod of thisCart.products) {
+      payload.products.push(prod.getData());
+    }
+
+    // Configure fetch options
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    };
+
+    // Send order data to server
+    fetch(url, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then((data) => {
+        console.log('Order sent successfully:', data);
+        // Optionally, reset the cart after successful order
+        thisCart.clearCart();
+      })
+      .catch((error) => {
+        console.error('There was a problem sending the order:', error.message);
+      });
+  }
+  clearCart() {
+    this.products = [];
+    this.update();
   }
 }
 
@@ -570,6 +622,17 @@ class CartProduct {
         thisCartProduct.priceSingle * thisCartProduct.amount; // Recalculate the price
       thisCartProduct.dom.price.innerHTML = thisCartProduct.price; // Update the price in HTML
     });
+  }
+  getData() {
+    const thisCartProduct = this;
+    return {
+      id: thisCartProduct.id,
+      amount: thisCartProduct.amount,
+      price: thisCartProduct.price,
+      priceSingle: thisCartProduct.priceSingle,
+      name: thisCartProduct.name,
+      params: thisCartProduct.params
+    };
   }
 }
 
